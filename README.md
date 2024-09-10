@@ -24,7 +24,7 @@ Single rum: ```
     "N": "8"
   }
 }
-```
+``` ```
 Double rum: ```
 {
   "RoomID": {
