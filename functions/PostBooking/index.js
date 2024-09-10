@@ -26,11 +26,30 @@ exports.handler = async (event) => {
             TableName: 'rooms-db',
         });
 
-        const room = Items.find((room) => room.RoomID === booking.RoomID);
+        let room = Items.find((room) => room.RoomID === booking.RoomID && room.AvailableRooms > 0);
         
-        if (!room) {
-            console.error('Room not found:', booking.RoomID);
-            return sendError(404, { message: 'Room not found' });
+        if (room && room.NrGuests < booking.NrGuests) {
+            if (booking.NrGuests === 1) {
+                room = Items.find((room) => room.RoomID === 'Single' && room.AvailableRooms > 0);
+            } else if (booking.NrGuests === 2) {
+                room = Items.find((room) => room.RoomID === 'Double' && room.AvailableRooms > 0);
+            } else if (booking.NrGuests === 3) {
+                room = Items.find((room) => room.RoomID === 'Suite' && room.AvailableRooms > 0);
+            } else {
+                return sendError(404, { message: 'No available rooms' });
+            }
+        }
+
+        if (room.AvailableRooms > 0) {
+            await db.update({
+                TableName: 'rooms-db',
+                Key: { RoomID: room.RoomID },
+                UpdateExpression: 'SET AvailableRooms = AvailableRooms - :decrement',
+                ExpressionAttributeValues: { ':decrement': 1 },
+                ReturnValues: 'UPDATED_NEW'
+            });
+        } else {
+            return sendError(404, { message: 'No available rooms' });
         }
 
         booking.TotalPrice = room.Price * booking.NrNights;
