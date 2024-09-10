@@ -43,8 +43,7 @@ Double rum: ```
     "N": "8"
   }
 }
-```
-
+``` ´´´
 Suite: ```
 {
   "RoomID": {
