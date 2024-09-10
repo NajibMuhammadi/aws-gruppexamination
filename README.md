@@ -7,7 +7,7 @@ För att detta ska fungera behövs en Rooms-db som du skapar i dynamoDB. booking
 ## Strukturen för **rooms-db** ser ut så här:
 
 **Single rum:** 
-```{
+```json {
   "RoomID": {
     "S": "Single"
   },
@@ -26,7 +26,7 @@ För att detta ska fungera behövs en Rooms-db som du skapar i dynamoDB. booking
 }```
 
 **Double rum:**
-```{
+```json {
   "RoomID": {
     "S": "Double"
   },
@@ -45,7 +45,7 @@ För att detta ska fungera behövs en Rooms-db som du skapar i dynamoDB. booking
 }```
 
 Suite:
-```{
+```json {
   "RoomID": {
     "S": "Suite"
   },
@@ -65,7 +65,7 @@ Suite:
 
 Strukturen för **bookings-db** kommer att se ut så här när en order skapas. Se exempel nedan:
 
-```{
+```json {
   "BookingID": {
     "S": "3abbc0"
   },
