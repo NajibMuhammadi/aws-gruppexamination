@@ -4,10 +4,10 @@ Välkommen till BonzAi's superavancerade bokningsverktyg! Nedan finner du instru
 ## Backgrund
 För att detta ska fungera behövs en Rooms-db som du skapar i dynamoDB. bookings-db genereras automatiskt genom koden.
 
-Strukturen för **rooms-db** ser ut så här:
+## Strukturen för **rooms-db** ser ut så här:
 
-Single rum: ```
-{
+**Single rum:** 
+```{
   "RoomID": {
     "S": "Single"
   },
@@ -23,10 +23,10 @@ Single rum: ```
   "TotalRooms": {
     "N": "8"
   }
-}
-``` ```
-Double rum: ```
-{
+}```
+
+**Double rum:**
+```{
   "RoomID": {
     "S": "Double"
   },
@@ -42,10 +42,10 @@ Double rum: ```
   "TotalRooms": {
     "N": "8"
   }
-}
-``` ´´´
-Suite: ```
-{
+}```
+
+Suite:
+```{
   "RoomID": {
     "S": "Suite"
   },
@@ -61,13 +61,11 @@ Suite: ```
   "TotalRooms": {
     "N": "4"
   }
-}
-```
+}```
 
 Strukturen för **bookings-db** kommer att se ut så här när en order skapas. Se exempel nedan:
 
-```
-{
+```{
   "BookingID": {
     "S": "3abbc0"
   },
@@ -83,9 +81,9 @@ Strukturen för **bookings-db** kommer att se ut så här när en order skapas. 
   "TotalPrice": {
     "N": "500"
   }
-}
-```
+}```
 
+# Endpoints
 
 ## **POST** Ny Bokning
 Endpoint: /api/bookings
