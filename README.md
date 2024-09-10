@@ -1,10 +1,14 @@
 # **AWS Gruppexamination - Error 404**
-** Välkommen till BonzAi's superavancerade bokningssystem! Nedan finner du instructioner så du själv kan använda funktionerna på rätt sätt: **
+Välkommen till BonzAi's superavancerade bokningssystem! Nedan finner du instructioner så du själv kan använda funktionerna på rätt sätt:
 
-## POST Ny Bokning
+## **POST** Ny Bokning
+Endpoint: /api/bookings
 
-## UPDATE Bokning
+## **UPDATE** Bokning
+Endpoint: /api/bookings/{id}
 
-## GET Alla Bokningar
+## **GET** Alla Bokningar
+Endpoint: /api/bookings
 
-## DELETE En Bokning
+## **DELETE** En Bokning
+Endpoint: /api/bookings/{id}
