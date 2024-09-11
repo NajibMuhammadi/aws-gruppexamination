@@ -110,7 +110,16 @@ exports.handler = async (event) => {
             }
         });
 
-        return sendResponse(200, { success: true, message: 'Booking added successfully!' });
+        return sendResponse(200, {
+            success: true, message: 'Booking added successfully',
+            bookingDetails: {
+                BookingID: bookingID,
+                NrGuests: booking.NrGuests,
+                NrNights: booking.NrNights,
+                TotalPrice: totalPrice,
+                RoomID: roomsToBook
+            }
+        });
 
     } catch (error) {
         console.error('Error in handler:', error);
