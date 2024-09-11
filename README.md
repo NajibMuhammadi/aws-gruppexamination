@@ -23,7 +23,49 @@ resources:
         BillingMode: PAY_PER_REQUEST
 ```
 
-- Du behöver också installera **UUID** genom att, i projektet skriva *npm i uuid* i terminalen. Uuis används när en bokning genereras i bookings-db.
+- Vidare behöver YAML-filen (.yml) tillägg i provider- och functionsdelarna.
+
+Provider section ska uppdateras så här för oss i norden och en IAM role som ger full access till DynamoDB och Lambda behövs:
+```yaml
+provider:
+  name: aws
+  runtime: nodejs20.x
+  region: eu-north-1
+  deploymentMethod: direct
+  iam:
+    role: Här klistrar du i arn-länken till din roll
+```
+
+För att verktyget ska fungera som väntat behöver du också redigera functions som ska se ut så här:
+```yaml
+functions:
+  GetBookings:
+    handler: functions/GetBookings/index.handler
+    events:
+      - httpApi:
+          path: /api/bookings
+          method: get
+  PostBooking:
+    handler: functions/PostBooking/index.handler
+    events:
+      - httpApi:
+          path: /api/bookings
+          method: post
+  UpdateBooking:
+    handler: functions/UpdateBooking/index.handler
+    events:
+      - httpApi:
+          path: /api/bookings/{id}
+          method: put
+  DeleteBooking:
+    handler: functions/DeleteBooking/index.handler
+    events:
+      - httpApi:
+          path: /api/bookings/{id}
+          method: delete
+```
+
+- Du behöver också installera **UUID** genom att, i projektet skriva *npm i uuid* i terminalen. Uuid används när en bokning genereras i bookings-db.
 
 ## Strukturen för **rooms-db** ser ut så här:
 *Detta skapar du i DynamoDB på AWS*
