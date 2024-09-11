@@ -27,6 +27,13 @@ exports.handler = async (event) => {
             TableName: 'rooms-db',
         });
 
+        const totalAvailableRooms = Items.reduce((total, room) => total + room.AvailableRooms, 0);
+
+        // Check if there are enough rooms to accommodate all guests
+        if (booking.NrGuests > totalAvailableRooms) {
+            return sendError(404, { message: 'Not enough rooms available to accommodate all guests. Try to decrease number of guests.' });
+        }
+
         // Group rooms by type and filter out unavailable ones
         const roomsByType = {
             Suite: Items.find((room) => room.RoomID === 'Suite' && room.AvailableRooms > 0),
@@ -49,7 +56,8 @@ exports.handler = async (event) => {
                 // Re-fetch the available rooms to check for changes
                 const { Items } = await db.scan({ TableName: 'rooms-db' });
                 roomsByType.Suite = Items.find((room) => room.RoomID === 'Suite' && room.AvailableRooms > 0);
-                continue;
+            } else {
+                break;
             }
         }
 
@@ -64,7 +72,8 @@ exports.handler = async (event) => {
                 // Re-fetch the available rooms to check for changes
                 const { Items } = await db.scan({ TableName: 'rooms-db' });
                 roomsByType.Double = Items.find((room) => room.RoomID === 'Double' && room.AvailableRooms > 0);
-                continue;
+            } else {
+                break;
             }
         }
 
@@ -79,7 +88,8 @@ exports.handler = async (event) => {
                 // Re-fetch the available rooms to check for changes
                 const { Items } = await db.scan({ TableName: 'rooms-db' });
                 roomsByType.Single = Items.find((room) => room.RoomID === 'Single' && room.AvailableRooms > 0);
-                continue;
+            } else {
+                break;
             }
         }
 
@@ -108,9 +118,12 @@ exports.handler = async (event) => {
     }
 };
 
-// Funktion för att uppdatera tillgängliga rum i DynamoDB
 const updateRoomAvailability = async (roomID, decrement) => {
     try {
+        const { Item } = await db.get({ TableName: 'rooms-db', Key: { RoomID: roomID } });
+        if (Item.AvailableRooms < decrement) {
+            throw new Error('Not enough rooms available');
+        }
         await db.update({
             TableName: 'rooms-db',
             Key: { RoomID: roomID },
