@@ -26,6 +26,7 @@ resources:
 - Du behöver också installera **UUID** genom att, i projektet skriva *npm i uuid* i terminalen. Uuis används när en bokning genereras i bookings-db.
 
 ## Strukturen för **rooms-db** ser ut så här:
+*Detta skapar du i DynamoDB på AWS*
 
 **Single rum:** 
 ```json
