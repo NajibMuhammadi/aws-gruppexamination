@@ -1,8 +1,29 @@
 # **AWS Gruppexamination - Error 404**
-Välkommen till BonzAi's superavancerade bokningsverktyg! Nedan finner du instructioner så du själv kan använda funktionerna på rätt sätt:
+Välkommen till BonzAi's superavancerade bokningsverktyg! Nedan finner du instruktioner så du själv kan använda funktionerna på rätt sätt:
 
 ## Backgrund
-För att detta ska fungera behövs en Rooms-db som du skapar i dynamoDB. bookings-db genereras automatiskt genom koden.
+För att detta ska fungera behövs detta:
+
+- Rooms-db som du skapar i AWS dynamoDB.
+
+- bookings-db genereras automatiskt genom koden. Dock så behöver du lägga till lite extra kod i din .yml fil. På samma nivå som provider och functions ska du lägga till resources:
+```yaml
+resources:
+  Resources:
+    EventsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: 'bookings-db'
+        AttributeDefinitions:
+          - AttributeName: 'BookingID'
+            AttributeType: 'S'
+        KeySchema:
+          - AttributeName: 'BookingID'  
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+```
+
+- Du behöver också installera **UUID** genom att, i projektet skriva *npm i uuid* i terminalen. Uuis används när en bokning genereras i bookings-db.
 
 ## Strukturen för **rooms-db** ser ut så här:
 
