@@ -18,7 +18,9 @@ exports.handler = async (event) => {
 
     try {
         const { Items } = await db.scan({ TableName: 'rooms-db' });
-        const totalAvailableRooms = Items.reduce((total, room) => total + room.AvailableRooms, 0);
+        const totalAvailableRooms = Items.reduce((total, room) => {
+            return total + (room.AvailableRooms * room.NrGuests);
+        }, 0);
 
         if (booking.NrGuests > totalAvailableRooms) {
             return sendError(404, { message: 'Not enough rooms available.' });
