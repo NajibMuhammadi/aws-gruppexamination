@@ -159,9 +159,84 @@ Strukturen för **bookings-db** kommer att se ut så här när en order skapas. 
 
 ## **POST** Ny Bokning
 Endpoint: /api/bookings
-
+JSON body exempel: 
+  ```json
+{
+    "NrGuests": 12,
+    "NrNights": 1
+  }
+```
+  eller
+  ```json
+  {
+  "booking": {
+    "NrGuests": 12,
+    "NrNights": 1
+  }
+  }
+```
+  Response true exempel:
+  ```json
+  {
+	"success": true,
+	"message": "Booking added successfully",
+	"bookingDetails": {
+		"BookingID": "d788fe",
+		"NrGuests": 12,
+		"NrNights": 1,
+		"TotalPrice": 6000,
+		"RoomID": [
+			"Suite",
+			"Suite",
+			"Suite",
+			"Suite"
+		]
+	}
+```
+Response false exempel:
+```json
+{
+	"success": false,
+	"data": {
+		"message": "Not enough rooms available."
+	}
+}
+```
+  
 ## **UPDATE** Bokning
 Endpoint: /api/bookings/{id}
+JSOn body exempel:
+ ```json
+{
+    "NrGuests": 6,
+    "NrNights": 1
+ }
+```
+ eller
+ ```json
+{
+  "booking": {
+    "NrGuests": 6,
+    "NrNights": 1
+ }
+ }
+```
+Response true exempel: 
+```json
+{
+	"success": true,
+	"message": "Din bokning har uppdaterats!"
+}
+```
+Response false exempel:
+```json
+{
+	"success": false,
+	"data": {
+		"message": "Bokningen kunde ej hittas, kontrollera din ID och försök igen."
+	}
+}
+```
 
 ## **GET** Alla Bokningar
 Endpoint: /api/bookings
