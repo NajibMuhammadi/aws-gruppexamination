@@ -21,6 +21,17 @@ exports.handler = async (event) => {
             return sendError(404, { success: false, message: `No booking found with booking ID ${BookingID}` });
         }
 
+        const { RoomID } = result.Item;
+
+        for (const roomType of RoomID) {
+            await db.update({
+                TableName: 'rooms-db',
+                Key: { RoomID: roomType },
+                UpdateExpression: 'SET AvailableRooms = AvailableRooms + :increment',
+                ExpressionAttributeValues: { ':increment': 1 }
+            });
+        }
+
         await db.delete({
             TableName: 'bookings-db',
             Key: { BookingID: BookingID }
