@@ -11,9 +11,19 @@ exports.handler = async (event) => {
     let booking;
     try {
         booking = JSON.parse(body).booking || JSON.parse(body);
-    } catch (error) {
+
+    
+        const allowedFields = ['NrGuests', 'NrNights'];
+        const invalidFields = Object.keys(booking).filter(field => !allowedFields.includes(field));
+
+        if (invalidFields.length > 0) {
+        return sendError(400, { message: `Ogiltiga fält: ${invalidFields.join(', ')}` });
+        }
+
+        } catch (error) {
         return sendError(400, { message: 'Invalid JSON format' });
-    }
+        }
+
 
     const { NrGuests, NrNights } = booking;
     const bookingID = pathParameters.id;

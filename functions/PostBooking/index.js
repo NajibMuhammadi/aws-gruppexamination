@@ -13,7 +13,12 @@ exports.handler = async (event) => {
     if (!booking.NrGuests || !booking.NrNights) {
         return sendError(400, { message: 'Missing required fields' });
     }
+    const allowedFields = ['NrGuests', 'NrNights'];
+    const invalidFields = Object.keys(booking).filter(field => !allowedFields.includes(field));
 
+    if (invalidFields.length > 0) {
+        return sendError(400, { message: `Ogiltiga fält: ${invalidFields.join(', ')}` });
+    }
     const bookingID = uuid().substring(0, 6);
 
     try {
