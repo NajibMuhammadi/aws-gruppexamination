@@ -207,7 +207,7 @@ Response false exempel:
 Endpoint: /api/bookings/{id}
 *{id} ersätts med bokningens faktiska id från bookings-db*
 
-JSOn body exempel:
+JSON body exempel:
  ```json
 {
     "NrGuests": 6,
@@ -223,6 +223,10 @@ JSOn body exempel:
  }
  }
 ```
+Response false alltså om fel fält/format matas in i json:
+```json
+
+
 Response true exempel: 
 ```json
 {
