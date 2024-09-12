@@ -175,6 +175,17 @@ JSON body exempel:
   }
   }
 ```
+
+Response false exempel alltså om fel fält/format matas in i json:
+```json
+{
+	"success": false,
+	"data": {
+		"message": "Invalid fields: Hund"
+	}
+}
+```
+
   Response true exempel:
   ```json
   {
@@ -223,9 +234,15 @@ JSON body exempel:
  }
  }
 ```
-Response false alltså om fel fält/format matas in i json:
+Response false exempel alltså om fel fält/format matas in i json:
 ```json
-
+{
+	"success": false,
+	"data": {
+		"message": "Invalid fields: Hund"
+	}
+}
+```
 
 Response true exempel: 
 ```json
