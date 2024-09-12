@@ -205,6 +205,8 @@ Response false exempel:
   
 ## **UPDATE** Bokning
 Endpoint: /api/bookings/{id}
+*{id} ersätts med bokningens faktiska id från bookings-db*
+
 JSOn body exempel:
  ```json
 {
@@ -241,7 +243,44 @@ Response false exempel:
 ## **GET** Alla Bokningar
 Endpoint: /api/bookings
 
+Response exempel:
+```json
+{
+	"message": "Following rooms are booked in BonzAi hotel: ",
+	"data": [
+		{
+			"NrNights": 1,
+			"TotalPrice": 3000,
+			"RoomID": [
+				"Suite",
+				"Suite"
+			],
+			"BookingID": "d788fe",
+			"NrGuests": 6
+		}
+	]
+}
+```
+
 ## **DELETE** En Bokning
 Endpoint: /api/bookings/{id}
+*{id} ersätts med den faktiska id'n från bookings-db*
 
-Där det står {id} ska det ersättas med den riktiga BookingID som hittas i dynamoDB databasen Bookings-db. Finns inte bokningskoden eller koden är fel format så genereras fel.
+Response true exempel:
+```json
+{
+	"success": true,
+	"message": "Your booking with booking number d788fe has been cancelled."
+}
+```
+
+Response false exempel:
+```json
+{
+	"success": false,
+	"data": {
+		"success": false,
+		"message": "No booking found with booking ID d788fe"
+	}
+}
+```
